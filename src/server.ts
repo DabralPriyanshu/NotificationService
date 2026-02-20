@@ -9,6 +9,7 @@ import {
 import logger from "./config/logger.config";
 import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middleware";
 import { setupMailerWorker } from "./processors/email.processor";
+import { renderMailTemplate } from "./templates/templates.handler";
 // import { NotificationDto } from "./dto/notification.dto";
 // import { addEmailToQueue } from "./producers/email.producer";
 
@@ -40,4 +41,9 @@ app.listen(serverConfig.PORT, async () => {
   //   params: { name: "John Doe", orderId: "1234" },
   // };
   // addEmailToQueue(sampleNotification);
+  const response = await renderMailTemplate("welcome", {
+    name: "John Doe",
+    appName: "Booking.com",
+  });
+  console.log(response);
 });
