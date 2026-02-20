@@ -9,9 +9,8 @@ import {
 import logger from "./config/logger.config";
 import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middleware";
 import { setupMailerWorker } from "./processors/email.processor";
-import { renderMailTemplate } from "./templates/templates.handler";
-// import { NotificationDto } from "./dto/notification.dto";
-// import { addEmailToQueue } from "./producers/email.producer";
+import { NotificationDto } from "./dto/notification.dto";
+import { addEmailToQueue } from "./producers/email.producer";
 
 const app = express();
 
@@ -34,16 +33,11 @@ app.listen(serverConfig.PORT, async () => {
   logger.info(`Press Ctrl+C to stop the server.`);
   setupMailerWorker();
   logger.info(`Mailer worker setup done`);
-  // const sampleNotification: NotificationDto = {
-  //   to: "sample",
-  //   subject: "Sample Email",
-  //   templateId: "sample-template",
-  //   params: { name: "John Doe", orderId: "1234" },
-  // };
-  // addEmailToQueue(sampleNotification);
-  const response = await renderMailTemplate("welcome", {
-    name: "John Doe",
-    appName: "Booking.com",
-  });
-  console.log(response);
+  const sampleNotification: NotificationDto = {
+    to: "priyanshudabral008@gmail.com",
+    subject: "Test Email",
+    templateId: "welcome",
+    params: { name: "priyanshu ", appName: "Booking App" },
+  };
+  addEmailToQueue(sampleNotification);
 });
